@@ -5,11 +5,16 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from tkinter import * 
+from tkinter import ttk
+from tktabl import *
 tk_app = Tk()
 
 db = db_connect.SessionLocal()
 
 tk_app.title('Test')
+
+frame = ttk.Frame(tk_app)
+frame.pack(expand=YES, fill=BOTH)
 
 def add_task() :
 	now = datetime.now()
@@ -24,6 +29,9 @@ def get_tasks() :
 	raw_sql = text('SELECT * FROM tasks WHERE is_deleted = :deletion_bool ORDER BY id')
 	result = db.execute(raw_sql, {"deletion_bool": False}).fetchall()
 	print(result)
+
+	table = Table(frame, data=result)
+	table.pack()
 
 button1 = Button(tk_app, text='Add Task', width=25, command=add_task)
 button1.pack()
