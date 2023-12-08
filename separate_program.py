@@ -38,7 +38,7 @@ def get_tasks() :
 	table = Table(frame, row=len(result), col=len(result[0]), headers=headers, data=result)
 	for h in range(len(headers)) :
 		cell = table.get_cell(0, h)
-		cell.set_value(result[0][h])
+		cell.set_value(headers[h])
 	for i in range(1, len(result)+1) :
 		for j in range(len(result[i-1])) :
 			cell = table.get_cell(i, j)
