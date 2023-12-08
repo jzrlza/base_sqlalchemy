@@ -1,4 +1,4 @@
-import db_connect
+import db_connect #is from db_connect.py
 import random
 from datetime import datetime, timedelta
 from sqlalchemy import text
