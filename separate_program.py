@@ -4,8 +4,8 @@ from datetime import datetime, timedelta
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
-import tkinter as tk
-tk_app = tk.Tk()
+from tkinter import * 
+tk_app = Tk()
 
 db = db_connect.SessionLocal()
 
@@ -25,9 +25,9 @@ def get_tasks() :
 	result = db.execute(raw_sql, {"deletion_bool": False}).fetchall()
 	print(result)
 
-button1 = tk.Button(tk_app, text='Add Task', width=25, command=add_task)
+button1 = Button(tk_app, text='Add Task', width=25, command=add_task)
 button1.pack()
-button2 = tk.Button(tk_app, text='Display Tasks', width=25, command=get_tasks)
+button2 = Button(tk_app, text='Display Tasks', width=25, command=get_tasks)
 button2.pack()
 
 tk_app.mainloop()
