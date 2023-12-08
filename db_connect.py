@@ -52,9 +52,13 @@ class Tasks(Base):
 
 Base.metadata.create_all(bind=engine)
 
+"""
+unused function below
+
 def get_db():
 	try:
 		db = SessionLocal()
 		yield db
 	finally:
 		db.close()
+"""
