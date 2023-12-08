@@ -6,7 +6,8 @@ from sqlalchemy.orm import relationship
 
 config = {
 	"use_sqlite_rather_than_postgres": False,
-	"postgre_connection": "postgresql://postgres:<password>@localhost:5432/<dbname>"
+	"postgre_connection": "postgresql://postgres:1234@localhost:5432/templatedb",
+	"postgre_connection_template": "postgresql://postgres:<password>@localhost:5432/<dbname>"
 }
 
 if config["use_sqlite_rather_than_postgres"] :
@@ -37,7 +38,7 @@ class Users(Base):
 	is_admin = Column(Boolean, default=False)
 
 	recent_task_id = Column(Integer, ForeignKey("tasks.id"))
-	recent_task = relationship("Task", back_populates="recent_users")
+	recent_task = relationship("Tasks", back_populates="recent_users")
 
 class Tasks(Base):
 	__tablename__ = "tasks"
@@ -47,6 +48,13 @@ class Tasks(Base):
 	date_created = Column(String)
 	is_deleted = Column(Boolean, default=False)
 
-	recent_users = relationship("User", back_populates="recent_task")
+	recent_users = relationship("Users", back_populates="recent_task")
 
 Base.metadata.create_all(bind=engine)
+
+def get_db():
+	try:
+		db = SessionLocal()
+		yield db
+	finally:
+		db.close()
