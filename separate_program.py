@@ -30,7 +30,19 @@ def get_tasks() :
 	result = db.execute(raw_sql, {"deletion_bool": False}).fetchall()
 	print(result)
 
-	table = Table(frame, data=result)
+	headers = ['id','name','date_created','is_deleted']
+
+	if len(result) <= 0 :
+		return
+
+	table = Table(frame, row=len(result), col=len(result[0]), headers=headers, data=result)
+	for h in range(len(headers)) :
+		cell = table.get_cell(0, h)
+		cell.set_value(result[0][h])
+	for i in range(1, len(result)+1) :
+		for j in range(len(result[i-1])) :
+			cell = table.get_cell(i, j)
+			cell.set_value(result[i-1][j])
 	table.pack()
 
 button1 = Button(tk_app, text='Add Task', width=25, command=add_task)
