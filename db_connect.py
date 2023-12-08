@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, inspect
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Boolean, Column, Integer, String, ForeignKey
@@ -17,6 +17,7 @@ if config["use_sqlite_rather_than_postgres"] :
         SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread":False}
     )
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    inspector = inspect(engine)
 else :
     print("using postgres")
     SQLALCHEMY_DATABASE_URL = config["postgre_connection"]
@@ -24,6 +25,7 @@ else :
         SQLALCHEMY_DATABASE_URL
     )
     SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+    inspector = inspect(engine)
 
 Base = declarative_base()
 

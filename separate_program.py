@@ -30,7 +30,11 @@ def get_tasks() :
 	result = db.execute(raw_sql, {"deletion_bool": False}).fetchall()
 	print(result)
 
-	headers = ['id','name','date_created','is_deleted']
+	raw_headers = db_connect.inspector.get_columns("tasks")
+
+	headers = []
+	for raw_header in raw_headers :
+		headers.append(raw_header['name']) #the other key is 'type'
 
 	if len(result) <= 0 :
 		return
